@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .stage {
+            font-family: monospace;
+            white-space: pre;
+        }
+        .blank-list {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hangman Game</h1>
+    <div class="logo"><pre>{{ logo }}</pre></div>
+    <div class="stage"><pre>{{ stages[lives] }}</pre></div>
+    <div class="blank-list">{{ blank_list | join(' ') }}</div>
+    <div class="message">{{ message }}</div>
+
+    {% if lives > 0 and "_" in blank_list %}
+    <form method="post">
+        <input type="text" name="guess" maxlength="1" required>
+        <button type="submit">Submit</button>
+    </form>
+    {% endif %}
+
+    {% if lives == 0 %}
+    <div class="message">The word was: {{ chosen_word }}</div>
+    <a href="{{ url_for('home') }}">Play Again</a>
+    {% endif %}
+</body>
+</html>
